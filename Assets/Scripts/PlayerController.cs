@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float jumpForce = 10f;
-    [SerializeField] LayerMask platformLayerMask;    
+    [SerializeField] float jumpForce = 10f;    
     [SerializeField] float jumpForceMaxTimeDelay = .75f;
     [SerializeField] float lateralMovementForce = 4f;
+    [SerializeField] LayerMask platformLayerMask;
 
     float jumpTimeCounter = 0f;
     float jumpForcePercent = 0f;
     bool isGrounded = true;
     bool isPreJumping = false;
-    bool isJumping = false;
     bool moveRightPressed = false;
-    bool moveLeftPressed = true;
+    bool moveLeftPressed = false;
 
     Rigidbody2D rb2d;
     BoxCollider2D boxCollider2D;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         rb2d = this.GetComponent<Rigidbody2D>();
@@ -28,7 +26,6 @@ public class PlayerController : MonoBehaviour
         rb2d.freezeRotation = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(isGrounded)
@@ -44,7 +41,6 @@ public class PlayerController : MonoBehaviour
             {
                 isPreJumping = false;
                 isGrounded = false;
-                isJumping = true;
                 
                 //calculate jump force
                 jumpForcePercent = jumpTimeCounter / jumpForceMaxTimeDelay;
@@ -69,17 +65,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isJumping)
+        if (!isGrounded)
         {
             float jumpForceToApply = jumpForcePercent * jumpForce;
-            rb2d.AddForce(Vector2.up * jumpForceToApply, ForceMode2D.Impulse);
-            isJumping = false;
+            rb2d.AddForce(Vector2.up * jumpForceToApply, ForceMode2D.Impulse);            
             jumpForcePercent = 0f;
-            jumpTimeCounter = 0f;            
-        }
-
-        if(!isGrounded)
-        {
+            jumpTimeCounter = 0f;       
+        
             if (moveRightPressed)
             {
                 rb2d.AddForce(Vector2.right * lateralMovementForce, ForceMode2D.Force);
