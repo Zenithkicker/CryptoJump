@@ -11913,7 +11913,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &1975173151
 MonoBehaviour:
@@ -11927,9 +11927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f487d73748f49c4f8f4c7dd1136c2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
+  jumpForce: 15
+  jumpForceMaxTimeDelay: 0.3
+  lateralMovementForce: 10
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpForceMaxTimeDelay: 0.3
-  lateralMovementForce: 10
